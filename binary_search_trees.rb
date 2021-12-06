@@ -53,7 +53,25 @@ class Tree
 
     
 
-    def insert(value)
+    def insert(value, start_node=@root)
+        node = start_node
+        if node.value == value
+            p "What to do in this edge case"
+        elsif value < node.value
+            if node.left == nil
+                node.left = Node.new(value)
+            else
+                insert(value, node.left)
+            end
+        elsif value > node.value
+            if node.right == nil
+                node.right = Node.new(value)
+            else
+                insert(value, node.right)
+            end
+        end
+
+
         
     end
 
@@ -67,3 +85,6 @@ end
 tree = Tree.new
 tree.build_tree([1, 5, 8, 6, 10, 7, 2])
 p tree.find(10)
+tree.insert(11)
+tree.insert(11)
+p tree.root
