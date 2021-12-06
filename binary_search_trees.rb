@@ -55,9 +55,7 @@ class Tree
 
     def insert(value, start_node=@root)
         node = start_node
-        if node.value == value
-            p "What to do in this edge case"
-        elsif value < node.value
+        if value <= node.value
             if node.left == nil
                 node.left = Node.new(value)
             else
@@ -71,6 +69,8 @@ class Tree
             end
         end
 
+        def delete(value, starting_node=@root)
+        end
 
         
     end
