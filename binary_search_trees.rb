@@ -28,8 +28,36 @@ class Tree
             root.left = build_tree(frontarr)
             root.right = build_tree(backarr)
         end
-        root
+        @root = root
     end
+
+    def find(value, start_node=@root)
+        node = start_node
+        if node.value == value
+            return node
+        elsif value < node.value
+            if node.left == nil
+                return "Not found!"
+            else
+                find(value, node.left)
+            end
+        elsif value > node.value
+            if node.right == nil
+                return "Not found!"
+            else
+                find(value, node.right)
+            end
+        end
+    end
+
+
+    
+
+    def insert(value)
+        
+    end
+
+
 
 
         
@@ -37,4 +65,5 @@ class Tree
 end
 
 tree = Tree.new
-p tree.build_tree([1, 5, 8, 6, 10, 7, 2])
+tree.build_tree([1, 5, 8, 6, 10, 7, 2])
+p tree.find(10)
