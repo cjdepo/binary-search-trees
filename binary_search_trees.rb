@@ -55,36 +55,43 @@ class Tree
 
     def insert(value, start_node=@root)
         node = start_node
-        if value <= node.value
-            if node.left == nil
+        if value == node.value
+            return "No duplicate values allowed."
+        elsif value < node.value
+            if !node.left
                 node.left = Node.new(value)
             else
                 insert(value, node.left)
             end
         elsif value > node.value
-            if node.right == nil
+            if !node.right
                 node.right = Node.new(value)
             else
                 insert(value, node.right)
             end
         end
-
-        def delete(value, starting_node=@root)
-        end
-
-        
     end
 
-
-
-
+    def delete(value, start_node=@root)
+        node = start_node
+        if value == node.value
+            if !node.left && !node.right
+                # replace reference from parent node with nil
+            elsif node.left
+                # replace reference from parent node with node.left
+            elsif node.right
+                # replace reference from parent node with node.right
+            end
+        elsif value < node.value
+        elsif value > node.value
         
-
+        end
+    end
 end
 
 tree = Tree.new
 tree.build_tree([1, 5, 8, 6, 10, 7, 2])
 p tree.find(10)
-tree.insert(11)
-tree.insert(11)
+p tree.insert(11)
+p tree.insert(11)
 p tree.root
