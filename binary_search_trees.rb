@@ -120,16 +120,31 @@ class Tree
             end
         end   
     end
+
+    def level_order(node=@root, q=[@root])
+        while q.any?
+            node = q.shift
+            yield(node)
+            if node.left
+                q << node.left
+            end
+            if node.right
+                q << node.right
+            end
+        end
+    end
 end
 
 tree = Tree.new
 tree.build_tree([1, 5, 8, 6, 10, 7, 2])
-p tree
-p tree.find(10)
-p tree.insert(11)
-p tree.insert(11)
-p tree.insert(9)
-p tree.delete(9)
-p tree.delete(5)
-p tree.delete(2)
-p tree.root
+# p tree
+# p tree.find(10)
+# p tree.insert(11)
+# p tree.insert(11)
+# p tree.insert(9)
+# p tree.delete(9)
+# p tree.delete(5)
+# p tree.delete(2)
+# p tree.root
+tree.level_order { |node| p node }
+
