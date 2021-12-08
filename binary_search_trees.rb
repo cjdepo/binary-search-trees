@@ -184,13 +184,23 @@ class Tree
 
     def height(node=@root)
         max_height = 0
-        self.postorder do |node, height| 
+        self.postorder(node) do |node, height| 
             if height > max_height
                 max_height = height
             end
         end
         max_height
     end
+
+    def depth(node=@root)
+        result = 0
+        self.postorder(@root) do |this_node, depth|
+            if this_node == node
+                return depth
+            end
+        end
+    end
+        
 
 end
 
@@ -209,7 +219,10 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 3])
 #p tree.inorder{ |node| p node }
 #p tree.preorder{ |node| p node }
 #p tree.postorder{ |node, height| p node; p height }
-p tree.height
+p tree.height(tree.root)
+p tree.depth(tree.root.left.left)
+
+
 
 
 
