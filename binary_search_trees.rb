@@ -1,4 +1,4 @@
-
+require 'pry-byebug'
 class Node
 
     attr_accessor :value, :left, :right
@@ -16,11 +16,10 @@ class Tree
     attr_accessor :root
 
     def build_tree(arr)
-
         arr = arr.sort
         middle = arr.length/2
         root = Node.new(arr[middle])
-        if arr.length != 1
+        if arr.length > 1
             frontarr = arr[..middle-1]
             backarr = arr[middle+1..]
             root.left = build_tree(frontarr)
@@ -168,24 +167,35 @@ class Tree
         arr
     end
 
-    def postorder(node=@root, arr=[], &block)
+    def postorder(node=@root, arr=[], height=0, &block)
         if node.left
-            postorder(node.left, arr, &block)
+            postorder(node.left, arr, height+1, &block)
         end
         if node.right
-            postorder(node.right, arr, &block)
+            postorder(node.right, arr, height+1, &block)
         end
         if block_given?
-            yield(node)
+            yield(node, height)
         else
             arr << node
         end
         arr
     end
+
+    def height(node=@root)
+        max_height = 0
+        self.postorder do |node, height| 
+            if height > max_height
+                max_height = height
+            end
+        end
+        max_height
+    end
+
 end
 
 tree = Tree.new
-tree.build_tree([1, 5, 8, 6, 10, 7, 2])
+tree.build_tree([1, 5, 8, 6, 10, 7, 3])
 # p tree
 # p tree.find(10)
 # p tree.insert(11)
@@ -196,6 +206,10 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 2])
 # p tree.delete(2)
 # p tree.root
 # p tree.level_order { |node| p node }
-p tree.postorder{ |node| p node }
+#p tree.inorder{ |node| p node }
+#p tree.preorder{ |node| p node }
+#p tree.postorder{ |node, height| p node; p height }
+p tree.height
+
 
 
