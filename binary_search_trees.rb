@@ -122,9 +122,10 @@ class Tree
     end
 
     def level_order(node=@root, q=[@root])
+        arr = []
         while q.any?
             node = q.shift
-            yield(node)
+            block_given? ? yield(node) : arr.push(node)
             if node.left
                 q << node.left
             end
@@ -132,6 +133,54 @@ class Tree
                 q << node.right
             end
         end
+        if !block_given? 
+            return arr
+        end
+    end
+
+    def inorder(node=@root, arr=[], &block)
+        if node.left
+            inorder(node.left, arr, &block)
+        end
+        if block_given?
+            yield(node)
+        else
+            arr << node
+        end
+        if node.right
+            inorder(node.right, arr, &block)
+        end
+        arr
+    end
+
+    def preorder(node=@root, arr=[], &block)
+        if block_given?
+            yield(node)
+        else
+            arr << node
+        end
+        if node.left
+            preorder(node.left, arr, &block)
+        end
+        if node.right
+            preorder(node.right, arr, &block)
+        end
+        arr
+    end
+
+    def postorder(node=@root, arr=[], &block)
+        if node.left
+            postorder(node.left, arr, &block)
+        end
+        if node.right
+            postorder(node.right, arr, &block)
+        end
+        if block_given?
+            yield(node)
+        else
+            arr << node
+        end
+        arr
     end
 end
 
@@ -146,5 +195,7 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 2])
 # p tree.delete(5)
 # p tree.delete(2)
 # p tree.root
-tree.level_order { |node| p node }
+# p tree.level_order { |node| p node }
+p tree.postorder{ |node| p node }
+
 
