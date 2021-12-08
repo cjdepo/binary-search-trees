@@ -218,8 +218,11 @@ class Tree
         end
     end
     
-
-
+    def rebalance
+        arr = []
+        self.postorder{ |node| if node.value then arr << node.value end}
+        self.build_tree(arr)
+    end
 
 end
 
@@ -227,9 +230,12 @@ tree = Tree.new
 tree.build_tree([1, 5, 8, 6, 10, 7, 3, 4])
 # p tree
 # p tree.find(10)
+#p tree.insert(11)
 # p tree.insert(11)
-# p tree.insert(11)
-# p tree.insert(9)
+p tree.insert(9)
+p tree.insert(13)
+p tree.insert(14)
+p tree.insert(15)
 # p tree.delete(9)
 # p tree.delete(5)
 # p tree.delete(2)
@@ -240,7 +246,11 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 3, 4])
 #p tree.postorder{ |node, height| p node; p height }
 #p tree.height(tree.root)
 #p tree.depth(tree.root.left.left)
-#p tree.balanced?
+p tree.balanced?
+p tree
+tree.rebalance
+p tree
+p tree.balanced?
 
 
 
