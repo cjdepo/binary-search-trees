@@ -27,8 +27,12 @@ class Tree
         if arr.length > 1
             frontarr = arr[..middle-1]
             backarr = arr[middle+1..]
-            root.left = build_tree(frontarr)
-            root.right = build_tree(backarr)
+            if frontarr.any?
+                root.left = build_tree(frontarr)
+            end
+            if backarr.any?
+                root.right = build_tree(backarr)
+            end
         end
         @root = root
     end
@@ -216,8 +220,12 @@ class Tree
         if heights.uniq.length == 1
             return true
         elsif heights.uniq.length == 2
-            heights.sort[1] - heights.sort[0] <= 1
-            return true
+            diff = heights.uniq[1] - heights.uniq[0]
+            if diff <= 1 && diff >= -1
+                return true
+            else
+                return false
+            end       
         else
             return false
         end
@@ -226,13 +234,21 @@ class Tree
     def rebalance
         arr = []
         self.postorder{ |node| if node.value then arr << node.value end}
+        p arr
         self.build_tree(arr)
     end
+
+    def pretty_print(node = @root, prefix = '', is_left = true)
+        pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+        puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
+        pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+      end
 
 end
 
 tree = Tree.new
 tree.build_tree([1, 5, 8, 6, 10, 7, 3, 4])
+tree.pretty_print
 # p tree
 # p tree.find(10)
 #p tree.insert(11)
@@ -255,23 +271,30 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 3, 4])
 #p tree
 #tree.rebalance
 #p tree
-#p tree.balanced?
-#tree.random_build_tree
-#p tree.balanced?
+p tree.balanced?
+tree.random_build_tree
+tree.pretty_print
+p tree.balanced?
 #p tree.level_order{ |node| p node.value }
 #p tree.inorder{ |node| p node.value }
 #p tree.preorder{ |node| p node.value }
 #p tree.postorder{ |node| p node.value }
-tree.insert(101)
-tree.insert(150)
-tree.insert(200)
+ tree.insert(101)
+ tree.insert(150)
+ tree.insert(200)
+ tree.pretty_print
+ p tree.balanced?
+# p tree.rebalance
+# p tree
+# p tree.balanced?
+# p tree.level_order{ |node| p node.value }
+# p tree.inorder{ |node| p node.value }
+# p tree.preorder{ |node| p node.value }
+# p tree.postorder{ |node| node.value }
+tree.rebalance
+tree.pretty_print
 p tree.balanced?
-p tree.rebalance
-p tree.balanced?
-p tree.level_order{ |node| p node.value }
-p tree.inorder{ |node| p node.value }
-p tree.preorder{ |node| p node.value }
-p tree.postorder{ |node| node.value }
+p tree
 
 
 
