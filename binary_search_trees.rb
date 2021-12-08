@@ -14,6 +14,11 @@ end
 class Tree
 
     attr_accessor :root
+    
+    def random_build_tree
+        arr = Array.new(15) { rand(1..100) }
+        build_tree(arr)
+    end
 
     def build_tree(arr)
         arr = arr.sort
@@ -232,10 +237,10 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 3, 4])
 # p tree.find(10)
 #p tree.insert(11)
 # p tree.insert(11)
-p tree.insert(9)
-p tree.insert(13)
-p tree.insert(14)
-p tree.insert(15)
+#p tree.insert(9)
+#p tree.insert(13)
+#p tree.insert(14)
+#p tree.insert(15)
 # p tree.delete(9)
 # p tree.delete(5)
 # p tree.delete(2)
@@ -246,11 +251,29 @@ p tree.insert(15)
 #p tree.postorder{ |node, height| p node; p height }
 #p tree.height(tree.root)
 #p tree.depth(tree.root.left.left)
+#p tree.balanced?
+#p tree
+#tree.rebalance
+#p tree
+#p tree.balanced?
+#tree.random_build_tree
+#p tree.balanced?
+#p tree.level_order{ |node| p node.value }
+#p tree.inorder{ |node| p node.value }
+#p tree.preorder{ |node| p node.value }
+#p tree.postorder{ |node| p node.value }
+tree.insert(101)
+tree.insert(150)
+tree.insert(200)
 p tree.balanced?
-p tree
-tree.rebalance
-p tree
+p tree.rebalance
 p tree.balanced?
+p tree.level_order{ |node| p node.value }
+p tree.inorder{ |node| p node.value }
+p tree.preorder{ |node| p node.value }
+p tree.postorder{ |node| node.value }
+
+
 
 
 
