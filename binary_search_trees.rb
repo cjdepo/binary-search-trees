@@ -200,12 +200,31 @@ class Tree
             end
         end
     end
-        
+
+    def balanced?(node=@root)
+        heights = []
+        self.postorder(node) do |node, height|
+            if !node.left && !node.right
+                heights << height
+            end
+        end
+        if heights.uniq.length == 1
+            return true
+        elsif heights.uniq.length == 2
+            heights.sort[1] - heights.sort[0] <= 1
+            return true
+        else
+            return false
+        end
+    end
+    
+
+
 
 end
 
 tree = Tree.new
-tree.build_tree([1, 5, 8, 6, 10, 7, 3])
+tree.build_tree([1, 5, 8, 6, 10, 7, 3, 4])
 # p tree
 # p tree.find(10)
 # p tree.insert(11)
@@ -219,8 +238,10 @@ tree.build_tree([1, 5, 8, 6, 10, 7, 3])
 #p tree.inorder{ |node| p node }
 #p tree.preorder{ |node| p node }
 #p tree.postorder{ |node, height| p node; p height }
-p tree.height(tree.root)
-p tree.depth(tree.root.left.left)
+#p tree.height(tree.root)
+#p tree.depth(tree.root.left.left)
+#p tree.balanced?
+
 
 
 
